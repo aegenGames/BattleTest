@@ -4,19 +4,7 @@ using UnityEngine.UI;
 public class GUIManager : MonoBehaviour
 {
 	[SerializeField]
-	private MatchManager _matchManager;
-	[SerializeField]
 	private Button _endTurnButton;
-
-	private void Start()
-	{
-		//_matchManager.OnPlayerChanged += SetActiveButton;
-	}
-
-	private void SetActiveButton(bool value)
-	{
-		_endTurnButton.gameObject.SetActive(value);
-	}
 
 	private void Update()
 	{
