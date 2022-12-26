@@ -2,29 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+[RequireComponent(typeof(IProjectileMoveController))]
+public class Projectile : MonoBehaviour, IProjectile
 {
-	[SerializeField]
-	private ProjectileMoveController moveController;
+	private IProjectileMoveController moveController;
 
 	private List<IStateEffect> _effects;
-	private Character _target;
+	private ICharacter _target;
 	private int _damage = 1;
 
-	public UnityAction OnHitTarget;
+	public UnityAction OnHitTarget { get; set; }
 
 	private void Awake()
 	{
-		moveController = this.GetComponent<ProjectileMoveController>();
+		moveController = this.GetComponent<IProjectileMoveController>();
 	}
 
-	public void AttackTarget(Character target)
+	public void AttackTarget(ICharacter target)
 	{
 		_target = target;
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localRotation = Quaternion.identity;
-		StartCoroutine(moveController.StartMove(target));
+		StartCoroutine(moveController.MoveToTarget(target));
 	}
 
 	public void SetEffects(List<IStateEffect> newEffects)
@@ -39,11 +38,16 @@ public class Projectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (!other.gameObject.Equals(_target.gameObject))
+		if (!other.gameObject.Equals(_target.GetGameObject()))
 			return;
 
 		_target.TakeDmg(_damage);
-		_target.ApplyEffects(_effects);
+		IEffectable targetEffects = _target as IEffectable;
+		targetEffects?.ApplyEffects(_effects);
 		OnHitTarget.Invoke();
 	}
+	public void SetActive(bool value)
+    {
+		this.gameObject.SetActive(value);
+    }
 }

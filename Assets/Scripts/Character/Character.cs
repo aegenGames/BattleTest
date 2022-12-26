@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SkillManager))]
-[RequireComponent(typeof(CharacterState))]
-[RequireComponent(typeof(CharacterMoveController))]
-[RequireComponent(typeof(AnimationController))]
-public class Character : MonoBehaviour
+[RequireComponent(typeof(ISkillManager))]
+[RequireComponent(typeof(ICharacterState))]
+[RequireComponent(typeof(ICharacterMoveController))]
+[RequireComponent(typeof(IAnimationController))]
+public class Character : MonoBehaviour, ICharacter, IMovable, IAnimated, IEffectable
 {
-	[SerializeField]
-	private SkillManager _skillManager;
-	[SerializeField]
-	private CharacterState _state;
-	[SerializeField]
-	private CharacterMoveController _moveController;
-	[SerializeField]
-	private AnimationController _animController;
+	private ISkillManager _skillManager;
+	private ICharacterState _state;
+	private ICharacterMoveController _moveController;
+	private IAnimationController _animController;
 
 	private Vector3 _startPosition;
 	private Quaternion _startRotation;
 
 	public Vector3 Center { get; set; }
-	public UnityEvent OnDied { get; } = new UnityEvent();
+	public UnityAction OnDied { get; set; }
 
 	private void Start()
 	{
@@ -30,12 +26,17 @@ public class Character : MonoBehaviour
 		SetDelegates();
 	}
 
+	public GameObject GetGameObject()
+    {
+		return this.gameObject;
+    }
+
 	private void ComponentCaching()
 	{
-		_skillManager = this.GetComponent<SkillManager>();
-		_moveController = this.GetComponent<CharacterMoveController>();
-		_state = this.GetComponent<CharacterState>();
-		_animController = this.GetComponent<AnimationController>();
+		_skillManager = this.GetComponent<ISkillManager>();
+		_moveController = this.GetComponent<ICharacterMoveController>();
+		_state = this.GetComponent<ICharacterState>();
+		_animController = this.GetComponent<IAnimationController>();
 		Center = this.GetComponent<Collider>().bounds.center;
 
 		_startPosition = this.transform.position;
@@ -45,12 +46,12 @@ public class Character : MonoBehaviour
 
 	private void SetDelegates()
 	{
-		_state.OnDied.AddListener(Died);
-		_moveController.ChangeTriggerState += SetAnimationTriggerState;
+		_state.OnDied += OnDied;
+		_moveController.ChangeTriggerState += SetAnimationTrigger;
 		_skillManager.MoveToEnemyEvent += MoveToEnemy;
 		_skillManager.ReturnOnStartPositionEvent += MoveToStartPosition;
 		_skillManager.WaitAnimationStateEvent += WaitAnimationState;
-		_skillManager.SetAnimation += SetAnimationTriggerState;
+		_skillManager.SkillAnimationEvent += SetAnimationTrigger;
 	}
 
 	public void Activate()
@@ -69,7 +70,7 @@ public class Character : MonoBehaviour
 		_state.ResetState();
 		_skillManager.ResetManager();
 		_moveController.StopAllMove();
-		_moveController.ReturnStartPosition(_startPosition, _startRotation);
+		_moveController.TeleportOnPosition(_startPosition, _startRotation);
 		_animController.SetRoot();
 	}
 
@@ -98,11 +99,6 @@ public class Character : MonoBehaviour
 		_state.RemoveEffects(effects);
 	}
 
-	private void Died()
-	{
-		OnDied.Invoke();
-	}
-
 	public IEnumerator MoveToStartPosition()
 	{
 		yield return MoveTo(_startPosition);
@@ -114,12 +110,12 @@ public class Character : MonoBehaviour
 		yield return StartCoroutine(_moveController.MoveToEnemy(target.transform, distanceForAttack));
 	}
 
-	public IEnumerator MoveTo(Vector3 position)
+	public IEnumerator MoveTo(Vector3 position, float stoppingDistance = 0)
 	{
-		yield return StartCoroutine(_moveController.MoveTo(position));
+		yield return StartCoroutine(_moveController.MoveTo(position, stoppingDistance));
 	}
 
-	public IEnumerator Rotation(Vector3 axis, float angle)
+	public IEnumerator Rotate(Vector3 axis, float angle)
 	{
 		yield return StartCoroutine(_moveController.Rotate(axis, angle));
 	}
@@ -129,8 +125,8 @@ public class Character : MonoBehaviour
 		yield return StartCoroutine(_animController.WaitAnimationState(nameTrigger, value));
 	}
 
-	public void SetAnimationTriggerState(string nameTrigger, bool value)
+	public void SetAnimationTrigger(string nameTrigger, bool value)
 	{
-		_animController.SetBool(nameTrigger, value);
+		_animController.SetAnimationTrigger(nameTrigger, value);
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class SkillTrigger : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SkillTrigger : MonoBehaviour, ISkillTrigger, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	[SerializeField]
 	private LayerMask _targetlayer;
@@ -13,9 +13,9 @@ public class SkillTrigger : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 	private Image _skillIcon;
 	private Vector3 _startMousePosition;
 	private Vector3 _defaultPosition;
-	public Character SelfTarget { get; set; }
+	public ICharacter SelfTarget { get; set; }
 
-	public UnityAction<Character> OnHitObject;
+	public UnityAction<ICharacter> OnHitObject { get; set; }
 
 	private void Awake()
 	{
@@ -61,8 +61,13 @@ public class SkillTrigger : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 		this._skillIcon.sprite = skill.IconSprite;
 	}
 
-	public void HitObject(Character target)
+	public void HitObject(ICharacter target)
 	{
 		OnHitObject(target);
 	}
+
+	public GameObject GetGameObject()
+    {
+		return this.gameObject;
+    }
 }

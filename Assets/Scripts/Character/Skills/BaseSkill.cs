@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +14,7 @@ public class BaseSkill : MonoBehaviour, ISkill
 	[SerializeField]
 	[SerializeInterface(typeof(IStateEffect))]
 	private List<Object> _effectsPrefab;
-	protected List<IStateEffect> _effects => _effectsPrefab.OfType<IStateEffect>().ToList();
+	protected List<IStateEffect> Effects => _effectsPrefab.OfType<IStateEffect>().ToList();
 
 	[Header("Visual effects")]
 	[SerializeField]
@@ -25,11 +24,6 @@ public class BaseSkill : MonoBehaviour, ISkill
 	public UnityEvent OnSkillFinished { get; } = new UnityEvent();
 	public Sprite IconSprite { get => _icon; }
 	public LayerMask TargetLayer { get => _targetLayer; }
-
-	public UnityAction<string, bool> AttackAnimationEvent { get; set; }
-	public event ISkill.ReturnOnStartPositionHandler ReturnOnStartPositionEvent;
-	public event ISkill.MoveToEnemyHandler MoveToEnemyEvent;
-	public event ISkill.WaitAnimationStateHandler WaitAnimationStateEvent;
 
 	private void Start()
 	{
@@ -45,20 +39,5 @@ public class BaseSkill : MonoBehaviour, ISkill
 		StopAllCoroutines();
 	}
 
-	public virtual void StartSkill(Character target) { }
-
-	protected IEnumerator MoveToEnemy(Transform target, float distanceToEnmy)
-	{
-		yield return StartCoroutine(MoveToEnemyEvent(target, distanceToEnmy));
-	}
-
-	protected IEnumerator ReturnOnStart()
-	{
-		yield return StartCoroutine(ReturnOnStartPositionEvent());
-	}
-
-	protected IEnumerator WaitAnimationState(string nameState, bool value)
-	{
-		yield return StartCoroutine(WaitAnimationStateEvent(nameState, value));
-	}
+	public virtual void StartSkill(ICharacter target) { }
 }

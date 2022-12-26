@@ -19131,7 +19131,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: SetFalseAttackAnimation
+    functionName: SetFalseAnimation
     data: StartMeleeAnimation
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -1,16 +1,14 @@
 using System;
-using UnityEngine;
 using UnityEngine.Events;
 
-public interface IStateEffect : IEquatable<IStateEffect>
+public interface IStateEffect : IEquatable<IStateEffect>, IGameObjectli
 {
 	string EffectName { get; }
 	UnityEvent<IStateEffect> OnEffectEnded { get; }
 	void SetTarget(Character state);
 	void ActivateEffect(IStateEffect effectSettings);
 	void DeactivateEffect();
-	GameObject GetGameObject();
 	bool Use();
-	public bool Equals(object other);
-	public int GetHashCode();
+	bool Equals(object other);
+	int GetHashCode();
 }

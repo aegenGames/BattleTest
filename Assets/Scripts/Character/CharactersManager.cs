@@ -1,18 +1,23 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
-public class CharactersManager : MonoBehaviour
+public class CharactersManager : MonoBehaviour, ICharacterManager
 {
 	[SerializeField]
-	private Character[] _characterPrefabs;
+	[SerializeInterface(typeof(ICharacter))]
+	private List<UnityEngine.Object> _characterPrefabs;
+	private ICharacter[] CharacterPrefabs => _characterPrefabs.OfType<ICharacter>().ToArray();
+
 	[SerializeField]
 	private Transform _spawnPointsSet;
 
-	private Character[] _characters;
+	private ICharacter[] _characters;
 	private Transform[] _spawnPoints;
 
-	public UnityAction OnCharacterDied;
+	public UnityAction OnCharacterDied { get; set; }
 
 	private void Awake()
 	{
@@ -31,13 +36,13 @@ public class CharactersManager : MonoBehaviour
 
 	private void InstantiateCharacter()
 	{
-		_characters = new Character[_characterPrefabs.Length];
+		_characters = new Character[CharacterPrefabs.Length];
 		try
 		{
 			for (int i = 0; i < _characters.Length; ++i)
 			{
-				_characters[i] = Instantiate(_characterPrefabs[i], _spawnPoints[i].position, _spawnPoints[i].rotation, this.transform);
-				_characters[i].OnDied.AddListener(ChararacterDied);
+				_characters[i] = Instantiate(CharacterPrefabs[i].GetGameObject(), _spawnPoints[i].position, _spawnPoints[i].rotation, this.transform).GetComponent<ICharacter>();
+				_characters[i].OnDied += ChararacterDied;
 			}
 		}
 		catch(IndexOutOfRangeException e)

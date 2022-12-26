@@ -2,21 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CharacterState : MonoBehaviour
+public class CharacterState : MonoBehaviour, ICharacterState
 {
 	[SerializeField]
-	private EffectsManager _effectsManager;
-	[SerializeField]
-	private HealthBar _health;
-	[SerializeField]
-	private ShieldBar _shield;
+	[SerializeInterface(typeof(IStateEffectManager))]
+	private Object _effectsPrefab;
+	private IStateEffectManager EffectsManager => _effectsPrefab as IStateEffectManager;
 
-	public UnityEvent OnDied { get; } = new UnityEvent();
+	[SerializeField]
+	[SerializeInterface(typeof(IHealth))]
+	private Object _healthBar;
+	private IHealth Health => _healthBar as IHealth;
+
+	[SerializeField]
+	[SerializeInterface(typeof(IShield))]
+	private Object _shieldBar;
+	private IShield Shield => _shieldBar as IShield;
+
+	public UnityAction OnDied { get; set; }
 
 	private void Start()
 	{
-		_health.OnHPOver.AddListener(Died);
-		_effectsManager = this.GetComponent<EffectsManager>();
+		Health.OnHPOver.AddListener(Died);
 	}
 
 	private void Died()
@@ -26,40 +33,40 @@ public class CharacterState : MonoBehaviour
 
 	public void ResetState()
 	{
-		_health.ReserHP();
-		_shield.ResetShield();
-		_effectsManager.DeactivateAllEffects();
+		Health.ReserHP();
+		Shield.ResetShield();
+		EffectsManager.DeactivateAllEffects();
 	}
 
 	public void IncreaseHealth(int value)
 	{
-		_health.HP += value;
+		Health.HP += value;
 	}
 
 	public void HandleDmg(int dmg)
 	{
-		dmg = _shield.TakeDmg(dmg);
-		_health.HP -= dmg;
+		dmg = Shield.TakeDmg(dmg);
+		Health.HP -= dmg;
 	}
 
 	public void SetShield(int value, int duration)
 	{
-		_shield.SetShield(value, duration);
+		Shield.SetShield(value, duration);
 	}
 
 	public void ApplyEffects(List<IStateEffect> effects, Character target)
 	{
-		_effectsManager.ActivateEffects(effects, target);
+		EffectsManager.ActivateEffects(effects, target);
 	}
 
 	public void RemoveEffects(List<IStateEffect> effects)
 	{
-		_effectsManager.DeactivateEffects(effects);
+		EffectsManager.DeactivateEffects(effects);
 	}
 
 	public void ChangeState()
 	{
-		_effectsManager.UseEffects();
-		_shield.DecreaseDuration();
+		EffectsManager.UseEffects();
+		Shield.DecreaseDuration();
 	}
 }

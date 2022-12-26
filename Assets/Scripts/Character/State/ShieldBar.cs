@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShieldBar : MonoBehaviour
+public class ShieldBar : MonoBehaviour, IShield
 {
 	[Header("DIsplay shield")]
 	[SerializeField]
@@ -66,7 +66,7 @@ public class ShieldBar : MonoBehaviour
 		}
 		else
 		{
-			_outputText.gameObject.SetActive(false);
+			_outputText.gameObject.SetActive(true);
 		}
 	}
 
@@ -75,7 +75,8 @@ public class ShieldBar : MonoBehaviour
 		Shield = 0;
 	}
 
-	public void DecreaseDuration() {
+	public void DecreaseDuration()
+	{
 		if (--_duration == 0)
 			ResetShield();
 	}

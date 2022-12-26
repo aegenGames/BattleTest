@@ -6,11 +6,12 @@ public class SkillHeal : BaseSkill
 	[Min(1)]
 	private int _valueHealing = 1;
 
-	public override void StartSkill(Character target)
+	public override void StartSkill(ICharacter target)
 	{
 		base.StartSkill(target);
 		target.TakeHeal(_valueHealing);
-		target.ApplyEffects(_effects);
+		IEffectable targetEffects = target as IEffectable;
+		targetEffects?.ApplyEffects(Effects);
 		OnSkillFinished.Invoke();
 	}
 }

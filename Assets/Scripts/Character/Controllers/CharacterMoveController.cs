@@ -4,10 +4,10 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class CharacterMoveController : MonoBehaviour
+public class CharacterMoveController : MonoBehaviour, ICharacterMoveController
 {
 	private NavMeshAgent _agent;
-	public UnityAction<string, bool> ChangeTriggerState;
+	public UnityAction<string, bool> ChangeTriggerState { get; set; }
 	
 	private void Start()
 	{
@@ -65,7 +65,7 @@ public class CharacterMoveController : MonoBehaviour
 		yield return StartCoroutine(Rotate(axis, rotation.eulerAngles.y));
 	}
 
-	public void ReturnStartPosition(Vector3 position, Quaternion rotate)
+	public void TeleportOnPosition(Vector3 position, Quaternion rotate)
 	{
 		_agent.transform.position = position;
 		_agent.transform.rotation = rotate;
@@ -73,7 +73,6 @@ public class CharacterMoveController : MonoBehaviour
 
 	public void StopAllMove()
 	{
-		Debug.Log("StopAllMove");
 		StopAllCoroutines();
 		SetDormancy();
 		_agent.velocity = Vector3.zero;

@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &19869100
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2255,7 +2255,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &970272997
 PrefabInstance:
@@ -2909,7 +2909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200524c0faaca53498a83eb28b1654ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _charactersManager: {fileID: 161807506}
+  charactersManager: {fileID: 161807506}
 --- !u!4 &1363542729
 Transform:
   m_ObjectHideFlags: 0
@@ -2925,7 +2925,7 @@ Transform:
   - {fileID: 161807507}
   - {fileID: 538224999}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1363542730
 MonoBehaviour:
@@ -3002,11 +3002,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea457532395704747871962511fbd88b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2126829113}
-  _botPlayer: {fileID: 1363542728}
+  player: {fileID: 2126829113}
+  botPlayer: {fileID: 1363542728}
   _outputResultGameImage: {fileID: 19869101}
   _winSprite: {fileID: 21300000, guid: c7f3c9f51b7622f409121b7b29ee755d, type: 3}
   _lossSprite: {fileID: 21300000, guid: 2c9d80b4b0117e94aa06d4a3771a241b, type: 3}
+  OnPlayerChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 840467844}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1371736385
 Transform:
   m_ObjectHideFlags: 0
@@ -3020,7 +3035,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1374317204
 GameObject:
@@ -3310,7 +3325,7 @@ RectTransform:
   - {fileID: 840467843}
   - {fileID: 19869100}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3540,7 +3555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200524c0faaca53498a83eb28b1654ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _charactersManager: {fileID: 223793765}
+  charactersManager: {fileID: 223793765}
 --- !u!4 &2126829114
 Transform:
   m_ObjectHideFlags: 0

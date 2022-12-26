@@ -6,9 +6,13 @@ public class MatchManager : MonoBehaviour
 {
 	[Header("Players")]
 	[SerializeField]
-	Player _player;
+	[SerializeInterface(typeof(IPlayer))]
+	private Object player;
+	private IPlayer _player => player as IPlayer;
 	[SerializeField]
-	Player _botPlayer;
+	[SerializeInterface(typeof(IPlayer))]
+	private Object botPlayer;
+	private IPlayer _botPlayer => botPlayer as IPlayer;
 
 	[Header("End match")]
 	[SerializeField]
@@ -18,8 +22,8 @@ public class MatchManager : MonoBehaviour
 	[SerializeField]
 	private Sprite _lossSprite;
 
-
-	public UnityAction<bool> OnPlayerChanged;
+	[SerializeField]
+	public UnityEvent<bool> OnPlayerChanged = new UnityEvent<bool>();
 
 	void Start()
 	{
@@ -49,7 +53,7 @@ public class MatchManager : MonoBehaviour
 		_outputResultGameImage.sprite = tagLoser == "Player" ? _lossSprite : _winSprite;
 		_player.IsActive = false;
 		_botPlayer.IsActive = false;
-		OnPlayerChanged(_player.IsActive);
+		OnPlayerChanged.Invoke(_player.IsActive);
 		Player.IsBusy = true;
 	}
 
@@ -58,7 +62,7 @@ public class MatchManager : MonoBehaviour
 		_player.ResetPlayer();
 		_botPlayer.ResetPlayer();
 		StartMatch();
-		OnPlayerChanged(_player.IsActive);
+		OnPlayerChanged.Invoke(_player.IsActive);
 	}
 
 	private void StartMatch()
@@ -73,6 +77,6 @@ public class MatchManager : MonoBehaviour
 	{
 		_player.IsActive = !_player.IsActive;
 		_botPlayer.IsActive = !_botPlayer.IsActive;
-		OnPlayerChanged(_player.IsActive);
+		OnPlayerChanged.Invoke(_player.IsActive);
 	}
 }

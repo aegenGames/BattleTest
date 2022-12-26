@@ -10,7 +10,7 @@ public class GUIManager : MonoBehaviour
 
 	private void Start()
 	{
-		_matchManager.OnPlayerChanged += SetActiveButton;
+		//_matchManager.OnPlayerChanged += SetActiveButton;
 	}
 
 	private void SetActiveButton(bool value)

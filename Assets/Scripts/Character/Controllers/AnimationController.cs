@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class AnimationController : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class AnimationController : MonoBehaviour, IAnimationController
 {
 	private Animator _animator;
 
@@ -10,9 +11,9 @@ public class AnimationController : MonoBehaviour
 		_animator = this.GetComponent<Animator>();
 	}
 
-	public void SetFalseAttackAnimation(string name)
+	public void SetFalseAnimation(string name)
 	{
-		SetBool(name, false);
+		SetAnimationTrigger(name, false);
 	}
 
 	/// <summary>
@@ -35,7 +36,7 @@ public class AnimationController : MonoBehaviour
 		} while (_animator.GetCurrentAnimatorStateInfo(0).IsName(nameState) == isEnd);
 	}
 
-	public void SetBool(string name, bool value)
+	public void SetAnimationTrigger(string name, bool value)
 	{
 		_animator.SetBool(name, value);
 	}

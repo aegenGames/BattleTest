@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class SkillMeleeAttack : BaseSkill
+public class SkillMeleeAttack : BaseSkill, IMovementSkill, IAnimatedSkill
 {
 	[Header("Attack settings")]
 	[SerializeField]
@@ -11,32 +12,39 @@ public class SkillMeleeAttack : BaseSkill
 	[Min(1)]
 	private int _damage = 3;
 
-    public override void StartSkill(Character target)
+    public UnityAction<string, bool> SkillAnimationEvent { get; set; }
+
+	public event IAnimatedSkill.WaitAnimationStateHandler WaitAnimationStateEvent;
+	public event IMovementSkill.ReturnOnStartPositionHandler ReturnOnStartPositionEvent;
+    public event IMovementSkill.MoveToEnemyHandler MoveToEnemyEvent;
+
+    public override void StartSkill(ICharacter target)
 	{
 		base.StartSkill(target);
 		StartCoroutine(StartAttack(target));
 	}
 
-	private IEnumerator StartAttack(Character target)
+	private IEnumerator StartAttack(ICharacter target)
 	{
-		yield return StartCoroutine(MoveToEnemy(target.transform, _distanceForAttack));
+		yield return StartCoroutine(MoveToEnemyEvent(target.GetGameObject().transform, _distanceForAttack));
 		StartCoroutine(Attack(target));
 	}
 
-	public IEnumerator Attack(Character target)
+	public IEnumerator Attack(ICharacter target)
 	{
-		AttackAnimationEvent("StartMeleeAnimation", true);
-		yield return StartCoroutine(WaitAnimationState("MeleeAttack", true));
+		SkillAnimationEvent("StartMeleeAnimation", true);
+		yield return StartCoroutine(WaitAnimationStateEvent("MeleeAttack", true));
 		target.TakeDmg(_damage);
-		target.ApplyEffects(_effects);
+		IEffectable targetEffects = target as IEffectable;
+		targetEffects?.ApplyEffects(Effects);
 		_particleAttackEffect.Play(true);
-		yield return StartCoroutine(WaitAnimationState("Idle", false));
+		yield return StartCoroutine(WaitAnimationStateEvent("Idle", false));
 		yield return StartCoroutine(StopAttack());
 	}
 
 	private IEnumerator StopAttack()
 	{
-		yield return StartCoroutine(ReturnOnStart());
+		yield return StartCoroutine(ReturnOnStartPositionEvent());
 		OnSkillFinished.Invoke();
 	}
 }

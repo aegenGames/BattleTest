@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ProjectileMoveController : MonoBehaviour
+public class ProjectileMoveController : MonoBehaviour, IProjectileMoveController
 {
 	[Min(0.1f)]
 	[SerializeField]
@@ -18,7 +18,7 @@ public class ProjectileMoveController : MonoBehaviour
 		_rig = this.GetComponent<Rigidbody>();
 	}
 
-	public IEnumerator StartMove(Character target)
+	public IEnumerator MoveToTarget(ICharacter target)
 	{
 		Quaternion targetRotate;
 		Quaternion rotation;

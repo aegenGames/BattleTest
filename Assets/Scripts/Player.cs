@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPlayer
 {
 	[SerializeField]
-	private CharactersManager _charactersManager;
+	[SerializeInterface(typeof(ICharacterManager))]
+	private Object charactersManager;
+	private ICharacterManager _charactersManager => charactersManager as ICharacterManager;
 
 	private bool _isActive = false;
 
@@ -20,16 +22,16 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public UnityAction OnTurnOver;
-	public UnityAction OnStartTurn;
-	public UnityAction<string> OnLoss;
+	public UnityAction OnTurnOver { get; set; }
+	public UnityAction OnStartTurn { get; set; }
+	public UnityAction<string> OnLoss { get; set; }
 
 	private void Start()
 	{
 		_charactersManager.OnCharacterDied += Loss;
 	}
 
-	public void StartTurn()
+	private void StartTurn()
 	{
 		_charactersManager.ActivateCharacters();
 		OnStartTurn?.Invoke();
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
 		_charactersManager.ResetManager();
 	}
 
-	public void Loss()
+	private void Loss()
 	{
 		OnLoss(this.tag);
 	}

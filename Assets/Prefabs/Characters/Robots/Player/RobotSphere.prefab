@@ -632,10 +632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5edb41f8568af9d4ca916c779a9b89e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillManager: {fileID: 7677504291698974603}
-  _state: {fileID: 3090890130738564481}
-  _moveController: {fileID: 1563929956622045762}
-  _animController: {fileID: 704994033696774908}
 --- !u!114 &1563929956622045762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201ee72be3d31eb44abd754e50fa0ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 5518833438310782708}
+  _trigger: {fileID: 5518833438310782708}
   _skillsPrefabs:
   - {fileID: 2974737997596062979}
   - {fileID: 3609921462731731815}
@@ -678,9 +674,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956019a1f2d4e7642bbf7e0ae5045420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectsManager: {fileID: 3660832389413113650}
-  _health: {fileID: 1942841991094362616}
-  _shield: {fileID: 3932389750063901703}
+  _effectsPrefab: {fileID: 3660832389413113650}
+  _healthBar: {fileID: 1942841991094362616}
+  _shieldBar: {fileID: 3932389750063901703}
 --- !u!114 &3660832389413113650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4581,14 +4577,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3130934555109883535}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 239424925980402156}
-  m_Father: {fileID: 7724386584705710844}
-  m_RootOrder: 3
+  m_Father: {fileID: 1177542981105831641}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4880,7 +4876,6 @@ RectTransform:
   - {fileID: 1177542981105831641}
   - {fileID: 1508954367293608073}
   - {fileID: 1559540881304091907}
-  - {fileID: 444072525545493890}
   m_Father: {fileID: 1563929955108268959}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -5074,7 +5069,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 444072525545493890}
   m_Father: {fileID: 7724386584705710844}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

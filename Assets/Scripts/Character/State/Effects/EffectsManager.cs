@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EffectsManager : MonoBehaviour
+public class EffectsManager : MonoBehaviour, IStateEffectManager
 {
 	[SerializeField]
 	private Transform _outputField;
@@ -49,7 +49,6 @@ public class EffectsManager : MonoBehaviour
 
 	public void DeactivateEffect(IStateEffect effect)
 	{
-		Debug.Log(effect);
 		IStateEffect activeEffect = _activeEffects.GetValueOrDefault(effect.EffectName);
 		if (activeEffect == null)
 			return;
