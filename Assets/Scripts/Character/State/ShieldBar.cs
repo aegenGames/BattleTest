@@ -67,6 +67,7 @@ public class ShieldBar : MonoBehaviour, IShield
 		else
 		{
 			_outputText.gameObject.SetActive(true);
+			_outputText.text = Shield.ToString();
 		}
 	}
 
