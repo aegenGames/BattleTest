@@ -8,13 +8,13 @@ public class SkillManager : MonoBehaviour, ISkillManager
 {
 	[SerializeField]
 	[SerializeInterface(typeof(ISkillTrigger))]
-	private Object _trigger;
-	private ISkillTrigger Trigger => _trigger as ISkillTrigger;
+	private Object trigger;
+	private ISkillTrigger _trigger => trigger as ISkillTrigger;
 
 	[SerializeField]
 	[SerializeInterface(typeof(ISkill))]
-	private List<Object> _skillsPrefabs;
-	private ISkill[] _skills => _skillsPrefabs.OfType<ISkill>().ToArray();
+	private List<Object> skillsPrefabs;
+	private ISkill[] _skills => skillsPrefabs.OfType<ISkill>().ToArray();
 
 	private ISkill activeSkill;
 
@@ -51,8 +51,8 @@ public class SkillManager : MonoBehaviour, ISkillManager
 			}
 		}
 
-		Trigger.SelfTarget = SelfTarget;
-		Trigger.OnHitObject += LaunchSkill;
+		_trigger.SelfTarget = SelfTarget;
+		_trigger.OnHitObject += LaunchSkill;
 	}
 
 	private void SetAttackAnimation(string nameState, bool value)
@@ -63,13 +63,13 @@ public class SkillManager : MonoBehaviour, ISkillManager
 	public void ActivateTrigger()
 	{
 		activeSkill = _skills[Random.Range(0, _skills.Length)];
-		Trigger.GetGameObject().SetActive(true);
-		Trigger.SetSkill(activeSkill);
+		_trigger.GetGameObject().SetActive(true);
+		_trigger.SetSkill(activeSkill);
 	}
 
 	public void DeactivatedTrigger()
 	{
-		Trigger.GetGameObject().SetActive(false);
+		_trigger.GetGameObject().SetActive(false);
 	}
 
 	public void ResetManager()

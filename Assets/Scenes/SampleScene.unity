@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5cd53aabe9634cbf01f310769cc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterPrefabs:
+  characterPrefabs:
   - {fileID: 7220210003610193039, guid: 5cc4f4a1620665845bf9d42f0a3d5c34, type: 3}
   - {fileID: 7220210003610193039, guid: 5cc4f4a1620665845bf9d42f0a3d5c34, type: 3}
   - {fileID: 7220210003610193039, guid: 5cc4f4a1620665845bf9d42f0a3d5c34, type: 3}
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5cd53aabe9634cbf01f310769cc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterPrefabs:
+  characterPrefabs:
   - {fileID: 3861272739169751171, guid: 939dfc1ed549edd44917806fc7585597, type: 3}
   - {fileID: 3861272739169751171, guid: 939dfc1ed549edd44917806fc7585597, type: 3}
   - {fileID: 3861272739169751171, guid: 939dfc1ed549edd44917806fc7585597, type: 3}

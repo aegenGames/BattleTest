@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectName: Cleaning
-  _removableEffectPrefabs:
+  removableEffectPrefabs:
   - {fileID: 3526221869871114491, guid: cb0cf208ddd99d54abff0587411fd0ea, type: 3}

@@ -429,6 +429,11 @@ PrefabInstance:
       objectReference: {fileID: 3024731506520294172}
     - target: {fileID: 7677504291698974603, guid: 939dfc1ed549edd44917806fc7585597,
         type: 3}
+      propertyPath: skillsPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677504291698974603, guid: 939dfc1ed549edd44917806fc7585597,
+        type: 3}
       propertyPath: _skillsPrefabs.Array.size
       value: 2
       objectReference: {fileID: 0}

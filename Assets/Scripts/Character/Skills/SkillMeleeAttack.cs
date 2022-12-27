@@ -36,7 +36,7 @@ public class SkillMeleeAttack : BaseSkill, IMovementSkill, IAnimatedSkill
 		yield return StartCoroutine(WaitAnimationStateEvent("MeleeAttack", true));
 		target.TakeDmg(_damage);
 		IEffectable targetEffects = target as IEffectable;
-		targetEffects?.ApplyEffects(Effects);
+		targetEffects?.ApplyEffects(_effects);
 		_particleAttackEffect.Play(true);
 		yield return StartCoroutine(WaitAnimationStateEvent("Idle", false));
 		yield return StartCoroutine(StopAttack());

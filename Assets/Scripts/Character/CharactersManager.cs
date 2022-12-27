@@ -8,8 +8,8 @@ public class CharactersManager : MonoBehaviour, ICharacterManager
 {
 	[SerializeField]
 	[SerializeInterface(typeof(ICharacter))]
-	private List<UnityEngine.Object> _characterPrefabs;
-	private ICharacter[] CharacterPrefabs => _characterPrefabs.OfType<ICharacter>().ToArray();
+	private List<UnityEngine.Object> characterPrefabs;
+	private ICharacter[] _characterPrefabs => characterPrefabs.OfType<ICharacter>().ToArray();
 
 	[SerializeField]
 	private Transform _spawnPointsSet;
@@ -36,12 +36,12 @@ public class CharactersManager : MonoBehaviour, ICharacterManager
 
 	private void InstantiateCharacter()
 	{
-		_characters = new Character[CharacterPrefabs.Length];
+		_characters = new Character[_characterPrefabs.Length];
 		try
 		{
 			for (int i = 0; i < _characters.Length; ++i)
 			{
-				_characters[i] = Instantiate(CharacterPrefabs[i].GetGameObject(), _spawnPoints[i].position, _spawnPoints[i].rotation, this.transform).GetComponent<ICharacter>();
+				_characters[i] = Instantiate(_characterPrefabs[i].GetGameObject(), _spawnPoints[i].position, _spawnPoints[i].rotation, this.transform).GetComponent<ICharacter>();
 				_characters[i].OnDied += ChararacterDied;
 			}
 		}

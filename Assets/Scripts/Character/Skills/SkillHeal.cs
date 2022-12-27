@@ -11,7 +11,7 @@ public class SkillHeal : BaseSkill
 		base.StartSkill(target);
 		target.TakeHeal(_valueHealing);
 		IEffectable targetEffects = target as IEffectable;
-		targetEffects?.ApplyEffects(Effects);
+		targetEffects?.ApplyEffects(_effects);
 		OnSkillFinished.Invoke();
 	}
 }

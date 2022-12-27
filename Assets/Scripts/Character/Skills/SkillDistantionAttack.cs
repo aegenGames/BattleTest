@@ -8,32 +8,32 @@ public class SkillDistantionAttack : BaseSkill
 
 	[SerializeField]
 	[SerializeInterface(typeof(IProjectile))]
-	private Object _projectile;
-	private IProjectile Projectile => _projectile as IProjectile;
+	private Object projectile;
+	private IProjectile _projectile => projectile as IProjectile;
 
 	private void Start()
 	{
-		Projectile.OnHitTarget += StopSkill;
-		Projectile.SetEffects(Effects);
-		Projectile.SetDmg(_damage);
+		_projectile.OnHitTarget += StopSkill;
+		_projectile.SetEffects(_effects);
+		_projectile.SetDmg(_damage);
 	}
 
 	public override void StartSkill(ICharacter target)
 	{
 		base.StartSkill(target);
-		Projectile.SetActive(true);
-		Projectile.AttackTarget(target);
+		_projectile.SetActive(true);
+		_projectile.AttackTarget(target);
 	}
 
 	private void StopSkill()
 	{
-		Projectile.SetActive(false);
+		_projectile.SetActive(false);
 		OnSkillFinished.Invoke();
 	}
 
 	public override void BreakSkill()
 	{
 		base.BreakSkill();
-		Projectile.SetActive(false);
+		_projectile.SetActive(false);
 	}
 }

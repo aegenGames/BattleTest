@@ -6,8 +6,8 @@ public class CleaningEffect : BaseEffect
 {
 	[SerializeField]
 	[SerializeInterface(typeof(IStateEffect))]
-	private List<Object> _removableEffectPrefabs;
-	private List<IStateEffect> _removableDebuffs => _removableEffectPrefabs.OfType<IStateEffect>().ToList();
+	private List<Object> removableEffectPrefabs;
+	private List<IStateEffect> _removableDebuffs => removableEffectPrefabs.OfType<IStateEffect>().ToList();
 
 	public override void ActivateEffect(IStateEffect effect)
 	{

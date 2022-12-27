@@ -13,8 +13,8 @@ public class BaseSkill : MonoBehaviour, ISkill
 	[Header("State effects")]
 	[SerializeField]
 	[SerializeInterface(typeof(IStateEffect))]
-	private List<Object> _effectsPrefab;
-	protected List<IStateEffect> Effects => _effectsPrefab.OfType<IStateEffect>().ToList();
+	private List<Object> effectsPrefab;
+	protected List<IStateEffect> _effects => effectsPrefab.OfType<IStateEffect>().ToList();
 
 	[Header("Visual effects")]
 	[SerializeField]

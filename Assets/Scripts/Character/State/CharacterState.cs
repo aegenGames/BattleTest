@@ -6,24 +6,24 @@ public class CharacterState : MonoBehaviour, ICharacterState
 {
 	[SerializeField]
 	[SerializeInterface(typeof(IStateEffectManager))]
-	private Object _effectsPrefab;
-	private IStateEffectManager EffectsManager => _effectsPrefab as IStateEffectManager;
+	private Object effectsManager;
+	private IStateEffectManager _effectsManager => effectsManager as IStateEffectManager;
 
 	[SerializeField]
 	[SerializeInterface(typeof(IHealth))]
-	private Object _healthBar;
-	private IHealth Health => _healthBar as IHealth;
+	private Object healthBar;
+	private IHealth _health => healthBar as IHealth;
 
 	[SerializeField]
 	[SerializeInterface(typeof(IShield))]
-	private Object _shieldBar;
-	private IShield Shield => _shieldBar as IShield;
+	private Object shieldBar;
+	private IShield _shield => shieldBar as IShield;
 
 	public UnityAction OnDied { get; set; }
 
 	private void Start()
 	{
-		Health.OnHPOver.AddListener(Died);
+		_health.OnHPOver.AddListener(Died);
 	}
 
 	private void Died()
@@ -33,40 +33,40 @@ public class CharacterState : MonoBehaviour, ICharacterState
 
 	public void ResetState()
 	{
-		Health.ReserHP();
-		Shield.ResetShield();
-		EffectsManager.DeactivateAllEffects();
+		_health.ReserHP();
+		_shield.ResetShield();
+		_effectsManager.DeactivateAllEffects();
 	}
 
 	public void IncreaseHealth(int value)
 	{
-		Health.HP += value;
+		_health.HP += value;
 	}
 
 	public void HandleDmg(int dmg)
 	{
-		dmg = Shield.TakeDmg(dmg);
-		Health.HP -= dmg;
+		dmg = _shield.TakeDmg(dmg);
+		_health.HP -= dmg;
 	}
 
 	public void SetShield(int value, int duration)
 	{
-		Shield.SetShield(value, duration);
+		_shield.SetShield(value, duration);
 	}
 
 	public void ApplyEffects(List<IStateEffect> effects, Character target)
 	{
-		EffectsManager.ActivateEffects(effects, target);
+		_effectsManager.ActivateEffects(effects, target);
 	}
 
 	public void RemoveEffects(List<IStateEffect> effects)
 	{
-		EffectsManager.DeactivateEffects(effects);
+		_effectsManager.DeactivateEffects(effects);
 	}
 
 	public void ChangeState()
 	{
-		EffectsManager.UseEffects();
-		Shield.DecreaseDuration();
+		_effectsManager.UseEffects();
+		_shield.DecreaseDuration();
 	}
 }

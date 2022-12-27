@@ -656,10 +656,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201ee72be3d31eb44abd754e50fa0ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trigger: {fileID: 5518833438310782708}
-  _skillsPrefabs:
-  - {fileID: 2974737997596062979}
+  trigger: {fileID: 5518833438310782708}
+  skillsPrefabs:
   - {fileID: 3609921462731731815}
+  - {fileID: 2974737997596062979}
   - {fileID: 265635637750737766}
   - {fileID: 8672992665939713808}
 --- !u!114 &3090890130738564481
@@ -674,9 +674,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956019a1f2d4e7642bbf7e0ae5045420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectsPrefab: {fileID: 3660832389413113650}
-  _healthBar: {fileID: 1942841991094362616}
-  _shieldBar: {fileID: 3932389750063901703}
+  effectsManager: {fileID: 3660832389413113650}
+  healthBar: {fileID: 1942841991094362616}
+  shieldBar: {fileID: 3932389750063901703}
 --- !u!114 &3660832389413113650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5282,6 +5282,17 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 295643975523078037, guid: 7da1fcec6a4ac674a99442dfd7854b7b,
         type: 3}
+      propertyPath: effectsPrefab.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 295643975523078037, guid: 7da1fcec6a4ac674a99442dfd7854b7b,
+        type: 3}
+      propertyPath: effectsPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 3526221869871114491, guid: cb0cf208ddd99d54abff0587411fd0ea,
+        type: 3}
+    - target: {fileID: 295643975523078037, guid: 7da1fcec6a4ac674a99442dfd7854b7b,
+        type: 3}
       propertyPath: _effectsPrefab.Array.data[0]
       value: 
       objectReference: {fileID: 3526221869871114491, guid: cb0cf208ddd99d54abff0587411fd0ea,
@@ -5398,6 +5409,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heal
       objectReference: {fileID: 0}
+    - target: {fileID: 3268318024669256825, guid: eeafae6b5196f8a419bdbeddbba51715,
+        type: 3}
+      propertyPath: effectsPrefab.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268318024669256825, guid: eeafae6b5196f8a419bdbeddbba51715,
+        type: 3}
+      propertyPath: effectsPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4033349165830274514, guid: faae04b80388e7f4fbaa70eca7d8e4c5,
+        type: 3}
     - target: {fileID: 3268318024669256825, guid: eeafae6b5196f8a419bdbeddbba51715,
         type: 3}
       propertyPath: _effectsPrefab.Array.data[0]
